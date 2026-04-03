@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Snoopy ❤️</title>
+    <style>
+        :root {
+            --bg: #FDF9F6;
+            --card: #FFFFFF;
+            --primary: #FFB7B7;
+            --text: #4A4A4A;
+            --accent: #FF5E5E;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: var(--card);
+            padding: 35px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            z-index: 10;
+            border: 1px solid #F0E6DD;
+            position: relative;
+        }
+
+        /* Corazón latiendo inicial */
+        .heart-icon {
+            font-size: 60px;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 { font-size: 24px; color: var(--text); margin-bottom: 15px; }
+        
+        /* Carta con texto muy legible */
+        .letter {
+            text-align: left;
+            font-size: 16px;
+            color: #333;
+            background: #FFF9F9;
+            padding: 25px;
+            border-radius: 20px;
+            border-left: 5px solid var(--primary);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+        }
+
+        .letter b { color: var(--accent); }
+
+        /* Botones */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-si { background: var(--accent); color: white; box-shadow: 0 5px 15px rgba(255,94,94,0.3); }
+        .btn-no { background: #F0F0F0; color: #999; }
+
+        /* Corazones y mensajes flotantes */
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: floatUp 4s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(25deg) scale(1.2); opacity: 0; }
+        }
+
+        #repairBox {
+            background: #2D2D2D;
+            color: #A6E22E;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        
+        <div id="step1">
+            <span class="heart-icon">❤️</span>
+            <h1>Hola, mi Esponjita...</h1>
+            <p style="color:#777; font-size: 16px;">Se detectó una falla en el sistema por "idealizaciones". <br>¿Damos inicio a la reparación?</p>
+            <br>
+            <button class="btn btn-si" onclick="startRepair()">SÍ, REPARAR</button>
+        </div>
+
+        <div id="repairBox">
+            > Analizando sentimientos de la Esponjita...<br>
+            > [OK] Borrando miedos innecesarios.<br>
+            > [OK] Cargando paciencia y mucho amor.<br>
+            > [OK] Ganas de verte viejito cargadas.<br>
+            > Preparando mensaje de reconciliación...
+        </div>
+
+        <div id="finalContent" style="display:none;">
+            <div class="letter">
+                Disculpa por lo que dije, mis sentimientos negativos todavía me ganan al momento de pensar en "idealizaciones" y eso no está bien, créeme que lo intento y pues a veces si me gana... <br><br>
+                Pero eso no quita que quiero mejorar para mí y estar bien, te quiero y quiero que estemos bien, tranquilos y felices sin mal interpretaciones, espero que sigamos biencito mi Snoopy... <br><br>
+                A seguir viendo tus ojitos, <b>tus canitas</b>, y espero verte todo el cabello blanco y amar eso todos los días, gracias por tu tiempo invertido mo... <br><br>
+                <b>¿La esponjita me disculpa?</b>
+            </div>
+            
+            <div class="btn-group" id="buttons">
+                <button class="btn btn-si" onclick="celebrate()">SÍ ❤️</button>
+                <button class="btn btn-no" id="btnNo" onclick="persuade()">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const noMessages = [
+            "¿Seguro que no? 🥺",
+            "Piénsalo bien...",
+            "Yo sé que sí quieres...",
+            "¡Tu corazón de Snoopy dice que SÍ!",
+            "La esponjita se pondrá triste..."
+        ];
+
+        function startRepair() {
+            document.getElementById('step1').style.display = 'none';
+            const box = document.getElementById('repairBox');
+            box.style.display = 'block';
+            setTimeout(() => {
+                box.style.display = 'none';
+                document.getElementById('finalContent').style.display = 'block';
+            }, 4000);
+        }
+
+        function persuade() {
+            const btnNo = document.getElementById('btnNo');
+            if (noCount < noMessages.length) {
+                btnNo.innerText = noMessages[noCount];
+                noCount++;
+                btnNo.style.transform = `scale(${1 - noCount*0.1})`;
+            } else {
+                btnNo.innerText = "Solo queda el SÍ ❤️";
+                btnNo.disabled = true;
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('buttons').innerHTML = "<h2 style='color:#FF5E5E; animation: pulse 1s infinite;'>¡TE AMO MUCHO! ✨</h2>";
+            
+            // Mezcla de corazones y tus frases especiales
+            const elements = [
+                "❤️", "💖", "💗", "💕", "💘",
+                "Snoopy quiere mover el bote! 🐾",
+                "Amo tus canitas! 👴",
+                "Quiero verte pelito blanco! ☁️",
+                "Esponjita feliz! 🧽",
+                "Moviendo el bote! 💃"
+            ];
+
+            for(let i = 0; i < 70; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'floating-element';
+                    el.innerText = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    // Tamaño y color aleatorio para los corazones
+                    el.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    if(el.innerText.length > 2) { // Si es texto
+                        el.style.color = '#4A4A4A';
+                        el.style.fontWeight = 'bold';
+                    } else { // Si es corazón
+                        el.style.color = Math.random() > 0.5 ? '#FF5E5E' : '#FFB7B7';
+                    }
+
+                    el.style.left = Math.random() * 90 + 'vw';
+                    el.style.top = '100vh';
+                    document.body.appendChild(el);
+                    
+                    setTimeout(() => el.remove(), 4000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
